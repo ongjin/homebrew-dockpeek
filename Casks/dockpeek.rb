@@ -11,7 +11,11 @@ cask "dockpeek" do
 
   app "DockPeek.app"
 
-  # Accessibility and Screen Recording permissions required
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-cr", "#{appdir}/DockPeek.app"]
+  end
+
   caveats <<~EOS
     DockPeek requires the following permissions to function:
 
@@ -21,6 +25,7 @@ cask "dockpeek" do
     2. Screen Recording (Required for thumbnails)
        System Settings → Privacy & Security → Screen Recording → Enable DockPeek
 
-    Launch DockPeek and grant permissions when prompted.
+    If macOS shows a security warning on first launch:
+       Right-click DockPeek → Open, then click "Open" in the dialog.
   EOS
 end
